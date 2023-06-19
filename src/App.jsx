@@ -1,30 +1,72 @@
+import axios from "axios";
 import { useState } from "react";
+import Dashboard from "./Dashboard";
 
-function App() {
-  const [count, setCount] = useState(0);
+function Login() {
+  const [value, setValue] = useState("");
+  const [password, setPassword] = useState("");
+  const [login, setLogin] = useState("idle");
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  const handlePassword = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    axios({
+      method: "post",
+      url: "/login",
+      data: {
+        username: value,
+        password: password,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) setLogin("success");
+      })
+      .catch(() => {
+        setLogin("error");
+      });
+  };
+
+  if (login === "success")
+    return (
+      <div>
+        <Dashboard />
+      </div>
+    );
 
   return (
-    <div>
-      <section>
-        <h1>Amazing scientists</h1>
-        <Profile />
-        <Profile />
-        <Profile />
-      </section>
-
-      <h1>Katherine Johnson</h1>
-      <img src="https://i.imgur.com/MK3eW3Am.jpg" alt="Katherine Johnson" />
-    </div>
+    <form onSubmit={e => e.preventDefault}>
+      <label htmlFor="username">Username</label>
+      <br />
+      <input
+        name="username"
+        type="text"
+        value={value}
+        onChange={handleChange}
+      />
+      <br />
+      <br />
+      <label htmlFor="password">Password</label>
+      <br />
+      <input
+        name="password"
+        type="password"
+        value={password}
+        onChange={handlePassword}
+      />
+      <br />
+      <br />
+      <button onClick={handleClick}>login</button>
+      <br />
+      {login === "error" ? "Wrong username or password" : ""}
+    </form>
   );
 }
 
-export default App;
-function Profile() {
-  return (
-    <img
-      src="https://i.imgur.com/MK3eW3Am.jpg"
-      alt="Katherine Johnson"
-    />
-  )
-}
-
+export default Login;
