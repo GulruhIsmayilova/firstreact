@@ -11,13 +11,15 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <ul>
-      {users.map((user) => (
-        <li key={user.name}>
-          <h6>{`${user.name}`}</h6>
-          <i>{`${user.email}`}</i>
-        </li>
-      ))}
-    </ul>
+    <div>
+      <ul>
+        {users.map((user) => (
+          <li key={user.name}>
+            <h6>{`${user.name}`}</h6>
+            <i>{`${user.email}`}</i>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
