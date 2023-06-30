@@ -1,14 +1,14 @@
 import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import "./App.css";
-import Dashboard from "./Dashboard";
+import Footer from "./Footer";
+import Shopping from "./Shopping";
 
 function App() {
   const [value, setValue] = useState("");
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(sessionStorage.getItem("is-auth"));
-  const [imgSrc, setImgSrc] = useState("");
+
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -50,27 +50,13 @@ function App() {
       });
   };
 
-  // uncontrolled
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = (e) => {
-      setImgSrc(e.target.result)
-    };
-  };
-
+ 
   if (login === "true")
     return (
       <div>
-        <Dashboard />
-        <input
-          type="file"
-          name="file"
-          accept="image/png, image/jpeg"
-          onChange={handleFileChange}
-        />
-        <img src={imgSrc} width="50"/>
+        <Shopping username={value} />
+        <Footer username={value} />
+       
         <button className="button" onClick={handleGoBack}>
           Logout
         </button>

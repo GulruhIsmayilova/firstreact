@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function Dashboard() {
+export default function Dashboard({ username }) {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -12,6 +12,7 @@ export default function Dashboard() {
 
   return (
     <div>
+      <h6>Welcome {username}</h6>
       <ul>
         {users.map((user) => (
           <li key={user.name}>

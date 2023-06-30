@@ -5,6 +5,10 @@ let users = [];
 for (let index = 0; index < 10; index++) {
   users.push({ name: faker.person.fullName(), email: faker.internet.email() });
 }
+let products = [];
+for (let index = 0; index < 10; index++) {
+  products.push({ name: faker.commerce.productName(), price: faker.commerce.price() });
+}
 
 export const handlers = [
   rest.post("/login", (req, res, ctx) => {
@@ -28,6 +32,11 @@ export const handlers = [
   rest.get("/users", (req, res, ctx) => {
     if (sessionStorage.getItem("is-auth") === "true") {
       return res(ctx.status(200), ctx.json(users));
+    }
+  }),
+  rest.get("/products", (req, res, ctx) => {
+    if (sessionStorage.getItem("is-auth") === "true") {
+      return res(ctx.status(200), ctx.json(products));
     }
   }),
 ];
